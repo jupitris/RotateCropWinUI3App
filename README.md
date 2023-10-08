@@ -1,0 +1,2 @@
+# RotateCropWinUI3App
+画像の指定したエリアを切り抜きするサンプル
