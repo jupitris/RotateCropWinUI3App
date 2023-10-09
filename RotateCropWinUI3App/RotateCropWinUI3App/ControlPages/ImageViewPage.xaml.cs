@@ -22,7 +22,7 @@ namespace RotateCropWinUI3App.ControlPages
     /// </summary>
     public sealed partial class ImageViewPage : Page
     {
-        private Point[] _points = Array.Empty<Point>();
+        private PointF[] _points = Array.Empty<PointF>();
         private int _angle = 0;
 
         public ImageViewPage()
@@ -39,15 +39,15 @@ namespace RotateCropWinUI3App.ControlPages
             using Bitmap bitmap = new(source);
 
             // 画像の中心座標を取得する
-            int centerX = bitmap.Width / 2;
-            int centerY = bitmap.Height / 2;
+            float centerX = bitmap.Width / 2;
+            float centerY = bitmap.Height / 2;
 
-            // 画像を中心に幅250px、高さ300pxの矩形座標を作る
+            // 画像に対して80%の矩形を描画する 
             // TODO: 自由に矩形を描画する場合は、マウスポインターから座標を取得するなど動的に座標を決める
-            Point p0 = new(centerX - 125, centerY - 150);
-            Point p1 = new(centerX + 125, centerY - 150);
-            Point p2 = new(centerX + 125, centerY + 150);
-            Point p3 = new(centerX - 125, centerY + 150);
+            PointF p0 = new(centerX - (centerX * 0.8f), centerY - (centerY * 0.8f));
+            PointF p1 = new(centerX + (centerX * 0.8f), centerY - (centerY * 0.8f));
+            PointF p2 = new(centerX + (centerX * 0.8f), centerY + (centerY * 0.8f));
+            PointF p3 = new(centerX - (centerX * 0.8f), centerY + (centerY * 0.8f));
             _points = new[] { p0, p1, p2, p3 };
 
             // 矩形座標の回転
@@ -64,7 +64,7 @@ namespace RotateCropWinUI3App.ControlPages
             graphics.DrawLine(pen, p2, p3);
             graphics.DrawLine(pen, p0, p3);
             graphics.DrawLine(pen, p1, p2);
-            graphics.FillPolygon(brush, new Point[] { p0, p1, p2, p3 });
+            graphics.FillPolygon(brush, new PointF[] { p0, p1, p2, p3 });
 
             // BitmapImageへ変換
             BitmapImage bitmapImage = new();
@@ -97,12 +97,12 @@ namespace RotateCropWinUI3App.ControlPages
             matrix.TransformPoints(_points);
 
             // 矩形のサイズを取得する
-            int xmin = _points.Min(p => p.X);
-            int xmax = _points.Max(p => p.X);
-            int ymin = _points.Min(p => p.Y);
-            int ymax = _points.Max(p => p.Y);
-            int width = xmax - xmin;
-            int height = ymax - ymin;
+            float xmin = _points.Min(p => p.X);
+            float xmax = _points.Max(p => p.X);
+            float ymin = _points.Min(p => p.Y);
+            float ymax = _points.Max(p => p.Y);
+            int width = (int)Math.Ceiling(xmax - xmin);
+            int height = (int)Math.Ceiling(ymax - ymin);
             
             // 切り抜いた画像の複写先を用意する
             using Bitmap dstBitmap = new(srcBitmap, width, height);
