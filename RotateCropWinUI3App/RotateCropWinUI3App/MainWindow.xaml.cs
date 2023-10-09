@@ -1,4 +1,5 @@
 using Microsoft.UI.Xaml;
+using RotateCropWinUI3App.ControlPages;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -10,8 +11,10 @@ namespace RotateCropWinUI3App
     /// </summary>
     public sealed partial class MainWindow : Window
     {
-        public MainWindow() => InitializeComponent();
-
-        private void MyButton_Click(object sender, RoutedEventArgs e) => myButton.Content = "Clicked";
+        public MainWindow()
+        {
+            InitializeComponent();
+            ContentFrame.SourcePageType = typeof(ImageViewPage);
+        }
     }
 }
