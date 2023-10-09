@@ -23,8 +23,8 @@
         <Slider x:Name="AngleSlider"
                 Grid.Row="1"
                 AutomationProperties.Name="Rotate Angle Slider"
-                Minimum="0"
-                Maximum="360"
+                Minimum="-180"
+                Maximum="180"
                 ValueChanged="AngleSlider_ValueChanged">
             <Slider.Header>
                 <TextBlock Text="Rotate angle" />
