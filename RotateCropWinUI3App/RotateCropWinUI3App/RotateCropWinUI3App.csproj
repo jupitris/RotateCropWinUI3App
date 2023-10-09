@@ -10,7 +10,8 @@
     <UseWinUI>true</UseWinUI>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="ControlPages\RotatedImagePage.xaml" />
+    <None Remove="ControlPages\CroppedImagePage.xaml" />
+    <None Remove="ControlPages\ImageViewPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,7 +22,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="ControlPages\RotatedImagePage.xaml">
+    <Page Update="ControlPages\CroppedImagePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="ControlPages\ImageViewPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

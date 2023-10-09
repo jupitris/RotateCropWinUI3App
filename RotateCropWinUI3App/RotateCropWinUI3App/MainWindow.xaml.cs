@@ -14,7 +14,7 @@ namespace RotateCropWinUI3App
         public MainWindow()
         {
             InitializeComponent();
-            ContentFrame.SourcePageType = typeof(RotatedImagePage);
+            ContentFrame.SourcePageType = typeof(ImageViewPage);
         }
     }
 }

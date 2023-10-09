@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Page
-    x:Class="RotateCropWinUI3App.ControlPages.RotatedImagePage"
+    x:Class="RotateCropWinUI3App.ControlPages.CroppedImagePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:RotateCropWinUI3App.ControlPages"
@@ -14,20 +14,16 @@
             <RowDefinition Height="200" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Image Grid.Row="0" x:Name="MainImage">
+        <Image x:Name="MainImage"
+               Grid.Row="0">
             <Image.Source>
-                <BitmapImage UriSource="/Assets/Images/undou_zenpou_chugaeri.png" />
+                <BitmapImage UriSource="" />
             </Image.Source>
         </Image>
-        <Slider x:Name="AngleSlider"
+        <Button x:Name="Reset"
                 Grid.Row="1"
-                AutomationProperties.Name="Rotate Angle Slider"
-                Minimum="0"
-                Maximum="360"
-                ValueChanged="AngleSlider_ValueChanged">
-            <Slider.Header>
-                <TextBlock Text="Rotate angle" />
-            </Slider.Header>
-        </Slider>
+                Content="Reset"
+                Click="Reset_Click"
+                ClickMode="Release" />
     </Grid>
 </Page>
