@@ -1,7 +1,5 @@
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
-using Microsoft.UI.Xaml.Shapes;
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -9,8 +7,6 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Windows.Graphics.Imaging;
-using Windows.UI;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -34,8 +30,8 @@ namespace RotateCropWinUI3App.ControlPages
         private void Draw(int angle = 0)
         {
             // 切り抜き対象画像(この段階では表示のみ)を読み込む
-            string path = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            System.Drawing.Image source = Bitmap.FromFile($"{path}/Assets/Images/undou_zenpou_chugaeri.png");
+            string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            System.Drawing.Image source = System.Drawing.Image.FromFile($"{path}/Assets/Images/undou_zenpou_chugaeri.png");
             using Bitmap bitmap = new(source);
 
             // 画像の中心座標を取得する
@@ -51,14 +47,14 @@ namespace RotateCropWinUI3App.ControlPages
             _points = new[] { p0, p1, p2, p3 };
 
             // 矩形座標の回転
-            System.Drawing.Drawing2D.Matrix matrix = new();
+            Matrix matrix = new();
             matrix.RotateAt(angle, new PointF(centerX, centerY));   // 回転軸を画像の中心にする
             matrix.TransformPoints(_points);                        // ジオメトリック変換(この例では回転)を矩形座標へ適用する
 
             // 矩形描画
             using Graphics graphics = Graphics.FromImage(bitmap);
-            using Pen pen = new(System.Drawing.Color.FromArgb(255, 255, 0, 0), 2);
-            using SolidBrush brush = new(System.Drawing.Color.FromArgb(25, 255, 0, 0));
+            using Pen pen = new(Color.FromArgb(255, 255, 0, 0), 2);
+            using SolidBrush brush = new(Color.FromArgb(25, 255, 0, 0));
             graphics.Transform = matrix;
             graphics.DrawLine(pen, p0, p1);
             graphics.DrawLine(pen, p2, p3);
@@ -86,13 +82,13 @@ namespace RotateCropWinUI3App.ControlPages
         private void CropImage_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             // 切り抜き対象画像(この段階では表示のみ)を読み込む
-            string path = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            System.Drawing.Image source = Bitmap.FromFile($"{path}/Assets/Images/undou_zenpou_chugaeri.png");
+            string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            System.Drawing.Image source = System.Drawing.Image.FromFile($"{path}/Assets/Images/undou_zenpou_chugaeri.png");
             using Bitmap srcBitmap = new(source);
 
             // NOTE: 実行順序が重要。回転 → 移動 → 複写の順に実行する。
             // 矩形座標に回転を適用する
-            using System.Drawing.Drawing2D.Matrix matrix = new();
+            using Matrix matrix = new();
             matrix.Rotate(_angle * -1);
             matrix.TransformPoints(_points);
 
@@ -113,7 +109,7 @@ namespace RotateCropWinUI3App.ControlPages
             // 新しいBitmapに複写する
             using Graphics graphics = Graphics.FromImage(dstBitmap);
             graphics.Transform = matrix;
-            graphics.Clear(System.Drawing.Color.FromArgb(255, 243, 243, 243)); // 画像の背景色と同じ色で塗りつぶす
+            graphics.Clear(Color.FromArgb(255, 243, 243, 243)); // 画像の背景色と同じ色で塗りつぶす
             graphics.DrawImage(srcBitmap, Point.Empty);
 
             Frame.Navigate(typeof(CroppedImagePage), (Bitmap)dstBitmap.Clone());
