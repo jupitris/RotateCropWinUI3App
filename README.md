@@ -7,7 +7,7 @@
 リポジトリをCloneします。
 
 ```sh
-https://github.com/jupitris/RotateCropWinUI3App.git
+git clone https://github.com/jupitris/RotateCropWinUI3App.git
 ```
 
 `RotateCropWinUI3App.sln`を開きます。`F5`キーを押してデバッグを開始してアプリを起動します
